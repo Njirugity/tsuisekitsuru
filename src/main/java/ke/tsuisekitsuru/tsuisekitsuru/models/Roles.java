@@ -1,10 +1,8 @@
 package ke.tsuisekitsuru.tsuisekitsuru.models;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 public class Roles {
@@ -13,12 +11,7 @@ public class Roles {
     private Long id;
     private String name;
 
-//    @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id"
-//    )
-//    private Set<Users> users = new HashSet<>();
+
     public Roles() {
     }
 
@@ -27,13 +20,7 @@ public class Roles {
         this.name = name;
     }
 
-//    public Set<Users> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<Users> users) {
-//        this.users = users;
-//    }
+
 
     public Long getId() {
         return id;
