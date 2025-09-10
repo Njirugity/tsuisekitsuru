@@ -1,7 +1,10 @@
 package ke.tsuisekitsuru.tsuisekitsuru.controllers;
 
+import ke.tsuisekitsuru.tsuisekitsuru.dtos.UserCreationDTO;
+import ke.tsuisekitsuru.tsuisekitsuru.dtos.UserRolesDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.models.Users;
 import ke.tsuisekitsuru.tsuisekitsuru.repositories.UsersRepository;
+import ke.tsuisekitsuru.tsuisekitsuru.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,13 +13,17 @@ import java.util.List;
 @RequestMapping("/users")
 public class UsersController {
     private UsersRepository usersRepository;
-    public UsersController(UsersRepository usersRepository){this.usersRepository = usersRepository;}
-    @GetMapping
-    public List<Users> getAllUser(){
-        return usersRepository.findAll();
+    private UserService userService;
+    public UsersController(UsersRepository usersRepository, UserService userService){
+        this.usersRepository = usersRepository;
+        this.userService = userService;
     }
-    @PostMapping
-    public Users createUser(@RequestBody Users newUser){
-        return usersRepository.save(newUser);
+    @GetMapping
+    public List<UserRolesDTO> getAllUser(){
+        return userService.getAll();
+    }
+    @PostMapping("/register")
+    public UserRolesDTO createUser(@RequestBody UserCreationDTO newUser){
+        return userService.createUser(newUser);
     }
 }
