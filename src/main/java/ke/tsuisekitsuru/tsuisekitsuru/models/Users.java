@@ -12,22 +12,16 @@ public class Users {
     private String email;
     private String phoneNumber;
     private String idNumber;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name="roles_id")
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
-    )
+
     private Roles roles;
 
     @ManyToOne
     @JoinColumn(name="dept_id")
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
-    )
-    @JsonIdentityReference(alwaysAsId = true)
+
     private Department department;
 
     public Users() {
@@ -86,6 +80,14 @@ public class Users {
 
     public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Roles getRoles() {
