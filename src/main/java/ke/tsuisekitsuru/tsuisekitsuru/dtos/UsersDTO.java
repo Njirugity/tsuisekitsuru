@@ -2,7 +2,7 @@ package ke.tsuisekitsuru.tsuisekitsuru.dtos;
 
 import ke.tsuisekitsuru.tsuisekitsuru.models.Roles;
 
-public class UserRolesDTO {
+public class UsersDTO {
     private String name;
     private String email;
     private Roles roles;
