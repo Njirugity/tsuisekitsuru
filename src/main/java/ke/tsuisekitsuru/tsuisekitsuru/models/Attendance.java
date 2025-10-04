@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean status;
-    private String date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "users_id")
@@ -24,7 +26,7 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(Long id, Boolean status, String date) {
+    public Attendance(Long id, Boolean status, LocalDate date) {
         this.id = id;
         this.status = status;
         this.date = date;
@@ -46,11 +48,11 @@ public class Attendance {
         this.status = status;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
