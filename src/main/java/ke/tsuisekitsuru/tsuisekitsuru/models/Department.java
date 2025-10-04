@@ -17,20 +17,21 @@ public class Department {
     private String name;
     private String description;
 
-//    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id"
-//    )
-//    private Set<Users> users = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id"
     )
-    @JsonIdentityReference(alwaysAsId = true)
+    private Set<Users> users = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id"
+//    )
+//    @JsonIdentityReference(alwaysAsId = true)
     private Company company;
 
     public Department() {
@@ -66,11 +67,19 @@ public class Department {
         this.description = description;
     }
 
-//    public Set<Users> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<Users> users) {
-//        this.users = users;
-//    }
+    public Set<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<Users> users) {
+        this.users = users;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }
