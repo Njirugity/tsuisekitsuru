@@ -8,11 +8,10 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Attendance {
+public class Dates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean status;
     private LocalDate date;
 
     @ManyToOne
@@ -23,12 +22,11 @@ public class Attendance {
     )
     @JsonIdentityReference(alwaysAsId = true)
     private Users users;
-    public Attendance() {
+    public Dates() {
     }
 
-    public Attendance(Long id, Boolean status, LocalDate date) {
+    public Dates(Long id, LocalDate date) {
         this.id = id;
-        this.status = status;
         this.date = date;
     }
 
@@ -38,14 +36,6 @@ public class Attendance {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     public LocalDate getDate() {

@@ -2,7 +2,7 @@ package ke.tsuisekitsuru.tsuisekitsuru.dtos;
 
 import java.time.LocalDate;
 
-public class AttendanceRequestDTO {
+public class DatesRequestDTO {
     private LocalDate startDate;
     private int numberOfDays;
 
