@@ -3,6 +3,9 @@ package ke.tsuisekitsuru.tsuisekitsuru.models;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Users {
     @Id
@@ -23,6 +26,18 @@ public class Users {
     @JoinColumn(name="dept_id")
 
     private Department department;
+
+    @OneToMany
+    @JoinColumn(name="attendance_id")
+    private Set<UserAttendance> userAttendance = new HashSet<>();
+
+    public Set<UserAttendance> getUserAttendance() {
+        return userAttendance;
+    }
+
+    public void setUserAttendance(Set<UserAttendance> userAttendance) {
+        this.userAttendance = userAttendance;
+    }
 
     public Users() {
     }

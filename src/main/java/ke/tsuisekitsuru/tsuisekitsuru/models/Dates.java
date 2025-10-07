@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Dates {
@@ -14,14 +16,10 @@ public class Dates {
     private Long id;
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
-    )
-    @JsonIdentityReference(alwaysAsId = true)
-    private Users users;
+    @OneToMany
+    @JoinColumn(name="attendance_id")
+    private Set<UserAttendance> userAttendance = new HashSet<>();
+
     public Dates() {
     }
 
@@ -46,11 +44,11 @@ public class Dates {
         this.date = date;
     }
 
-    public Users getUsers() {
-        return users;
+    public Set<UserAttendance> getUserAttendance() {
+        return userAttendance;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setUserAttendance(Set<UserAttendance> userAttendance) {
+        this.userAttendance = userAttendance;
     }
 }
