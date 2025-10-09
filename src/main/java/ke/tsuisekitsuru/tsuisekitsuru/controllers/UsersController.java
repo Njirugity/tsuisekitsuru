@@ -3,7 +3,6 @@ package ke.tsuisekitsuru.tsuisekitsuru.controllers;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.UpdateUserDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.UserCreationDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.UsersDTO;
-import ke.tsuisekitsuru.tsuisekitsuru.models.Users;
 import ke.tsuisekitsuru.tsuisekitsuru.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +29,11 @@ public class UsersController {
         return userService.createUser(newUser);
     }
     @PatchMapping("/assignDepartment/{id}/{deptId}")
-    public Users assignDepartment(@PathVariable("id") Long id, @PathVariable Long deptId){
+    public ResponseEntity<?> assignDepartment(@PathVariable("id") Long id, @PathVariable Long deptId){
         return userService.assignDepartment(id, deptId);
     }
     @PatchMapping("/assignRoles/{id}/{roleId}")
-    public Users assignRoles(@PathVariable("id") Long id, @PathVariable Long roleId){
+    public ResponseEntity<?> assignRoles(@PathVariable("id") Long id, @PathVariable Long roleId){
         return userService.assignRole(id, roleId);
     }
     @PutMapping("/updateUser/{id}")
