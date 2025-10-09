@@ -1,12 +1,11 @@
 package ke.tsuisekitsuru.tsuisekitsuru.controllers;
 
+import ke.tsuisekitsuru.tsuisekitsuru.dtos.UpdateUserDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.UserCreationDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.UsersDTO;
-import ke.tsuisekitsuru.tsuisekitsuru.models.Department;
 import ke.tsuisekitsuru.tsuisekitsuru.models.Users;
-import ke.tsuisekitsuru.tsuisekitsuru.repositories.DepartmentRepository;
-import ke.tsuisekitsuru.tsuisekitsuru.repositories.UsersRepository;
 import ke.tsuisekitsuru.tsuisekitsuru.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,28 +13,36 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-    private UsersRepository usersRepository;
-    private DepartmentRepository departmentRepository;
-    private UserService userService;
-    public UsersController(UsersRepository usersRepository, UserService userService, DepartmentRepository departmentRepository){
-        this.usersRepository = usersRepository;
+    private final UserService userService;
+    public UsersController(UserService userService){
         this.userService = userService;
-        this.departmentRepository = departmentRepository;
     }
     @GetMapping
     public List<UsersDTO> getAllUser(){
         return userService.getAll();
     }
+    @GetMapping("/{id}")
+    public UpdateUserDTO getUser(@PathVariable("id") Long id){
+        return userService.getUser(id);
+    }
     @PostMapping("/register")
     public UsersDTO createUser(@RequestBody UserCreationDTO newUser){
         return userService.createUser(newUser);
     }
-    @PatchMapping("/{id}/{deptId}/assignDepartment")
+    @PatchMapping("/assignDepartment/{id}/{deptId}")
     public Users assignDepartment(@PathVariable("id") Long id, @PathVariable Long deptId){
         return userService.assignDepartment(id, deptId);
     }
-    @PatchMapping("/{id}/{roleId}/assignRoles")
+    @PatchMapping("/assignRoles/{id}/{roleId}")
     public Users assignRoles(@PathVariable("id") Long id, @PathVariable Long roleId){
         return userService.assignRole(id, roleId);
+    }
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<?> updateUserDetails(@PathVariable("id") Long id, @RequestBody UpdateUserDTO userDetails){
+        return userService.updateUserDetails(id, userDetails);
+    }
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id){
+        return userService.deleteUser(id);
     }
 }
