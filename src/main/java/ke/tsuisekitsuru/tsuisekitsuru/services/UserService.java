@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * UserService - Class that contains all user logic
+ */
 @Service
 public class UserService {
 
@@ -38,6 +41,13 @@ public class UserService {
         this.updateUserMapper = updateUserMapper;
     }
 
+    /**
+     * Add a user
+     *
+     * @param userCreationDTO - dto for user registration
+     * Method will convert dto to entity add to database
+     * @return - a dto of the user
+     */
     public UsersDTO createUser(UserCreationDTO userCreationDTO){
         Users newUser = userMapper.userCreationDTOtoUsers(userCreationDTO);
         Users savedUser = usersRepository.save(newUser);
@@ -45,17 +55,35 @@ public class UserService {
     }
 
     /**
+     * Retrieve all user
      *
-     * @return a list of all users
+     * @return - list of all users in the database
      */
     public List<UsersDTO> getAll(){
         return userMapper.userToUserRoleDTOList(usersRepository.findAll());
     }
+
+    /**
+     * Retrieve one user
+     *
+     * @param id - user id
+     * Take the user id, query the database for the use
+     * @return - dto representation of an updated user
+     */
     public UpdateUserDTO getUser(Long id){
         Users existingUsers = usersRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("User not found"));
         return updateUserMapper.entityToUpdateDTO(existingUsers);
     }
+
+    /**
+     * Update user details
+     *
+     * @param id - user id
+     * @param userDetails - dto for fields to be updated
+     * Find a user by their id and only update the fields sent
+     * @return - response message
+     */
     public ResponseEntity <?> updateUserDetails(Long id, UpdateUserDTO userDetails){
         Users existingUsers = usersRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("User not found"));
@@ -78,15 +106,36 @@ public class UserService {
         response.put("message","Update successful");
         return ResponseEntity.ok(response);
     }
-    public  Users assignRole(Long id, Long addRole){
+
+    /**
+     * Update a users roles
+     *
+     * @param id - user id
+     * @param addRole - roles id
+     * Query for a user and role by id. Update the users roles
+     * @return - response message
+     */
+    public ResponseEntity<?> assignRole(Long id, Long addRole){
         Users existingUser = usersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Roles roles = rolesRepository.findById(addRole)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         existingUser.setRoles(roles);
-        return  usersRepository.save(existingUser);
+        usersRepository.save(existingUser);
+        Map<String, String > response = new HashMap<>();
+        response.put("message", "Department set successfully");
+        return ResponseEntity.ok(response);
     }
-    public Users assignDepartment(Long id, Long deptId){
+
+    /**
+     * Update a user department
+     *
+     * @param id -user id
+     * @param deptId -dept id
+     * Query for a user and department by id. Update the users department
+     * @return - response message
+     */
+    public ResponseEntity<?> assignDepartment(Long id, Long deptId){
         Users existingUser = usersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -94,9 +143,19 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
         existingUser.setDepartment(department);
-        return usersRepository.save(existingUser);
+        usersRepository.save(existingUser);
+        Map<String, String > response = new HashMap<>();
+        response.put("message", "Department set successfully");
+        return ResponseEntity.ok(response);
     }
 
+    /**
+     * Delete a user entity
+     *
+     * @param id - user id
+     * Find a user and delete
+     * @return - response message
+     */
     public ResponseEntity<?> deleteUser(Long id){
         Users existingUsers = usersRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("User not found"));
