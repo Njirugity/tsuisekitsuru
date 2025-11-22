@@ -1,46 +1,40 @@
 package ke.tsuisekitsuru.tsuisekitsuru.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Department {
+public class Projects extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String location;
     private String description;
+    private String code;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id"
-    )
+    @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Users> users = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id"
-//    )
-//    @JsonIdentityReference(alwaysAsId = true)
     private Company company;
 
-    public Department() {
+    public Projects() {
     }
 
-    public Department(Long id, String name, String description) {
+    public Projects(Long id, String location, String description, String code, LocalDate startDate, LocalDate endDate ) {
         this.id = id;
-        this.name = name;
+        this.location = location;
         this.description = description;
+        this.code = code;
+        this.startDate= startDate;
+        this.endDate = endDate;
     }
 
     public Long getId() {
@@ -51,12 +45,12 @@ public class Department {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLocation() {
+        return location;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDescription() {
@@ -65,6 +59,30 @@ public class Department {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public Set<Users> getUsers() {
