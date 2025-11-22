@@ -1,5 +1,6 @@
 package ke.tsuisekitsuru.tsuisekitsuru.controllers;
 
+import jakarta.validation.Valid;
 import ke.tsuisekitsuru.tsuisekitsuru.dtos.ProjectsDTO;
 import ke.tsuisekitsuru.tsuisekitsuru.services.ProjectsService;
 import org.springframework.http.ResponseEntity;
@@ -8,26 +9,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/department")
-public class DepartmentController {
+@RequestMapping("/projects")
+public class ProjectsController {
     private final ProjectsService projectsService;
 
-    public DepartmentController(ProjectsService projectsService) {
+    public ProjectsController(ProjectsService projectsService) {
         this.projectsService = projectsService;
     }
 
     @GetMapping
-    public List<ProjectsDTO> getAllDepartments(){
-        return projectsService.getAllDepartments();
+    public List<ProjectsDTO> getAllProjects(){
+        return projectsService.getAllProjects();
     }
 
-    @GetMapping("/{id")
-    public ProjectsDTO getDepartment(@PathVariable("id") Long id){
-        return projectsService.getDepartment(id);
+    @GetMapping("/{id}")
+    public ProjectsDTO getProject(@PathVariable("id") Long id){
+        return projectsService.getProject(id);
     }
     @PostMapping
-    public ResponseEntity<?> addDepartment(@RequestBody ProjectsDTO newDept){
-        return projectsService.addDepartments(newDept);
+    public ResponseEntity<?> addProject(@Valid @RequestBody ProjectsDTO newProject){
+        return projectsService.addProject(newProject);
     }
 
     @PatchMapping("/assignCompany/{id}/{compId}")
@@ -35,9 +36,9 @@ public class DepartmentController {
         return projectsService.assignCompany(id, compId);
     }
     @PutMapping("/updateDepartment/{id}")
-    public ResponseEntity<?> updateDepartment(@PathVariable("id")Long id,
+    public ResponseEntity<?> updateProject(@PathVariable("id")Long id,
                                               @RequestBody ProjectsDTO request){
-        return projectsService.updateDepartment(id, request);
+        return projectsService.updateProject(id, request);
     }
 
 }
